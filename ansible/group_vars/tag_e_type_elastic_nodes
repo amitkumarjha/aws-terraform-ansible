@@ -1,0 +1,22 @@
+es_config:
+  cluster.name: "elastic-cluster"
+  cluster.initial_master_nodes: "{{ hostvars[groups['tag_e_type_elastic_master'][0]]['ansible_eth0']['ipv4']['address'] }}"
+  discovery.seed_hosts: "{{ hostvars[groups['tag_e_type_elastic_master'][0]]['ansible_eth0']['ipv4']['address'] }}:9300"
+  http.port: 9200
+  transport.port: 9300
+  node.data: true
+  node.master: false
+  bootstrap.memory_lock: True
+  network.host: 0.0.0.0
+es_heap_size: "200m"
+es_api_basic_auth_username: elastic
+es_api_basic_auth_password: changeme
+es_enable_http_ssl: true
+es_enable_transport_ssl: true
+es_ssl_keystore: "files/certs/elastic-certificates.p12"
+es_ssl_truststore: "files/certs/elastic-certificates.p12"
+es_ssl_keystore_password: "changeme"
+es_ssl_truststore_password: "changeme"
+es_validate_certs: no
+es_plugins:
+ - plugin: ingest-attachment

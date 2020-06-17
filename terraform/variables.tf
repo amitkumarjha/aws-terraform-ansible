@@ -19,16 +19,13 @@ variable "network" {
 }
 
 variable "subnet-1" {
-  default = "production-subnetwork-1"
+  default = "production-subnetwork-public"
 }
 
 variable "subnet-2" {
-  default = "production-subnetwork-2"
+  default = "production-subnetwork-private"
 }
 
-variable "subnet-3" {
-  default = "production-subnetwork-3"
-}
 
 variable "internet-gateway" {
   default = "production-internet-gateway"

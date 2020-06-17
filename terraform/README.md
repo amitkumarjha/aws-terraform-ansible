@@ -5,7 +5,7 @@ Repository for the creating aws instance  using terrafomr
 
 ```
 #> export AWS_ACCESS_KEY_ID="**************"
-#> export AWS_ACCESS_KEY_ID="**************"
+#> export AWS_SECRET_ACCESS_KEY="**************"
 ```
 
 ####Create the Infrastructure like this

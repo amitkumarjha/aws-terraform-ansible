@@ -1,0 +1,37 @@
+---
+- name: Install Elasticsearch repository
+  when: es_use_repository
+  become: yes
+  block:
+  - name: Debian - Install apt-transport-https to support https APT downloads
+    apt:
+      name: apt-transport-https
+      state: present
+
+  - name: Debian - Add Elasticsearch repository key
+    apt_key:
+      url: '{{ es_apt_key }}'
+      id: '{{ es_apt_key_id }}'
+      state: present
+    when: es_add_repository and es_apt_key | string
+
+  - name: Debian - Add elasticsearch repository
+    apt_repository:
+      repo: '{{ item.repo }}'
+      state: '{{ item.state }}'
+    when: es_add_repository
+    with_items:
+      - { repo: "{{ es_apt_url }}", state: "present" }
+
+- name: Debian - Ensure elasticsearch is installed
+  become: yes
+  apt:
+    name: '{{ es_package_name }}{% if es_version is defined and es_version != "" %}={{ es_version }}{% endif %}'
+    state: present
+    allow_unauthenticated: "{{ 'no' if es_apt_key else 'yes' }}"
+    cache_valid_time: 86400
+  when: es_use_repository
+  register: debian_elasticsearch_install_from_repo
+  notify: restart elasticsearch
+  environment:
+    ES_PATH_CONF: "{{ es_conf_dir }}"

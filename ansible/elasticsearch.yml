@@ -1,0 +1,14 @@
+---
+- name: elastic instances
+  become: yes
+  hosts: tag_e_type_elastic_master
+  gather_facts: true
+  roles:
+    - { role: elastic.elasticsearch, tags: [ elastic, elastic-master ] }
+
+- name: elastic instances
+  become: yes
+  hosts: tag_e_type_elastic_nodes
+  gather_facts: true
+  roles:
+    - { role: elastic.elasticsearch, tags: [ elastic, elastic-nodes ] }
